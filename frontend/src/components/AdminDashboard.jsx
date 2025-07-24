@@ -20,6 +20,8 @@ import {
   Toolbar,
   CssBaseline,
 } from "@mui/material";
+import { CSVLink } from "react-csv";
+
 import { getExpense, updateStatus, logout } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
@@ -41,6 +43,24 @@ const AdminDashboard = () => {
 
   const navigate = useNavigate();
 
+  const headers = [
+    { label: "Date", key: "date" },
+    { label: "Category", key: "category" },
+    { label: "Amount", key: "amount" },
+    { label: "Status", key: "status" },
+    { label: "Receipt", key: "receiptUrl" },
+    { label: "User  ", key: "name" },
+  ];
+
+  const formattedData = expenses.map((expense) => ({
+    date: new Date(expense.date).toLocaleDateString(),
+    category: expense.category,
+    amount: expense.amount,
+    status: expense.status,
+    receiptUrl: expense.receiptUrl || "N/A",
+    name: expense.createdBy.name,
+  }));
+
   const handleFilterChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
@@ -49,6 +69,7 @@ const AdminDashboard = () => {
     await updateStatus(id, status);
     fetchExpenses();
   };
+
   const applyFilters = async () => {
     try {
       setLoading(true);
@@ -164,6 +185,14 @@ const AdminDashboard = () => {
             </Button>
           </Grid>
         </Grid>
+        <CSVLink
+          data={formattedData}
+          headers={headers}
+          filename="expenses.csv"
+          style={{ textDecoration: "none" }}
+        >
+          <Button variant="contained">Export CSV</Button>
+        </CSVLink>
         {loading ? (
           <CircularProgress />
         ) : (
