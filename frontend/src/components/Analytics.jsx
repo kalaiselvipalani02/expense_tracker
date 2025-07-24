@@ -27,6 +27,7 @@ import {
 } from "../services/authService";
 import Sidebar from "../components/Sidebar";
 import { useNavigate } from "react-router-dom";
+import HeaderBar from "./HeaderBar";
 
 const drawerWidth = 30;
 
@@ -93,19 +94,7 @@ const Analytics = () => {
     <Box p={4} sx={{ display: "flex" }}>
       <CssBaseline />
 
-      <AppBar
-        position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      >
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Welcome, {username}
-          </Typography>
-          <Button color="inherit" onClick={handleLogout}>
-            Logout
-          </Button>
-        </Toolbar>
-      </AppBar>
+      <HeaderBar username={username} />
       <Sidebar />
 
       <Box

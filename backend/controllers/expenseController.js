@@ -6,7 +6,7 @@ const getExpenses = async (req, res) => {
   const { _id, role } = req.query;
 
   try {
-    let filter = role === "admin" ? {} : { createdBy: _id };
+    let filter = req.user.role === "admin" ? {} : { createdBy: req.user.id };
 
     const { status, category, startDate, endDate } = req.query;
 
@@ -29,7 +29,7 @@ const getExpenses = async (req, res) => {
     const expenses = await Expense.find(filter)
       .sort({ createdAt: -1 })
       .populate("createdBy", "name email");
-
+    console.log(expenses);
     res.status(200).json(expenses);
   } catch (error) {
     res.status(500).json({ error: error.message });

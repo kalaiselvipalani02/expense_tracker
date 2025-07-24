@@ -17,13 +17,13 @@ import {
   InputLabel,
   Select,
   TextField,
-  AppBar,
   Toolbar,
   CssBaseline,
 } from "@mui/material";
 import { getExpense, updateStatus, logout } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
+import HeaderBar from "./HeaderBar";
 
 const drawerWidth = 30;
 const AdminDashboard = () => {
@@ -66,7 +66,7 @@ const AdminDashboard = () => {
   const fetchExpenses = async () => {
     try {
       const res = await getExpense();
-
+      console.log(res);
       setLoading(false);
       setExpenses(res);
     } catch (error) {
@@ -88,19 +88,7 @@ const AdminDashboard = () => {
   return (
     <Box p={4} sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      >
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Welcome, {username}
-          </Typography>
-          <Button color="inherit" onClick={handleLogout}>
-            Logout
-          </Button>
-        </Toolbar>
-      </AppBar>
+      <HeaderBar username={username} />
       <Sidebar />
 
       <Box
