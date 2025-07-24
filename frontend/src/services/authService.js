@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:4000/api/users";
-const EXPENSE_URL = "http://localhost:4000/api/expenses";
-const ANALYTICS_URL = "http://localhost:4000/api/analytics";
-const AUDITLOG_URL = "http://localhost:4000/api/audit";
+const API_URL = "https://expense-backend.onrender.com/api/users";
+const EXPENSE_URL = "https://expense-backend.onrender.com/api/expenses";
+const ANALYTICS_URL = "https://expense-backend.onrender.com/api/analytics";
+const AUDITLOG_URL = "https://expense-backend.onrender.com/api/audit";
 
 export const login = async (credentials) => {
   const response = await axios.post(`${API_URL}/login`, credentials);
